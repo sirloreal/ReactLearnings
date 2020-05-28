@@ -9,12 +9,13 @@ function CourseList(props) {
         <tr>
           <th>&nbsp;</th>
           <th>Title</th>
-          <th>Author ID</th>
+          <th>Author</th>
           <th>Category</th>
         </tr>
       </thead>
       <tbody>
         {props.courses.map((course) => {
+          const author = props.authors.find((a) => a.id === course.authorId);
           return (
             <tr key={course.id}>
               <td>
@@ -29,7 +30,7 @@ function CourseList(props) {
               <td>
                 <Link to={'/course/' + course.slug}> {course.title}</Link>
               </td>
-              <td>{course.authorId}</td>
+              <td>{author ? author.name : ''}</td>
               <td>{course.category}</td>
             </tr>
           );
