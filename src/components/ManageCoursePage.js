@@ -21,11 +21,16 @@ const ManageCoursePage = (props) => {
     if (courses.length === 0) {
       courseActions.loadCourses();
     } else if (slug) {
-      setCourse(courseStore.getCourseBySlug(slug));
+      const _course = courseStore.getCourseBySlug(slug);
+      if (_course) {
+        setCourse(_course);
+      } else {
+        props.history.push('/bogus');
+      }
     }
 
     return () => courseStore.removeChangeListener(onChange);
-  }, [courses.length, props.match.params.slug]); //If anything in this array changes, re-run this effect.
+  }, [courses.length, props.history, props.match.params.slug]); //If anything in this array changes, re-run this effect.
 
   function onChange() {
     setCourses(courseStore.getCourses());
